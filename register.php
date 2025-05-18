@@ -12,9 +12,9 @@ if(isset($_SESSION['logged_in'])){
 if(isset($_POST['register'])){
 
   $name = $_POST['name'];
-  $email = $_POST = ['email'];
-  $password = $_POST = ['password'];
-  $confirmPassword = $_POST = ['confirmPassword'];
+  $email = $_POST['email'];
+  $password = $_POST['password'];
+  $confirmPassword = $_POST['confirmpassword'];
 
 
   if($password !== $confirmPassword){
@@ -29,7 +29,7 @@ if(isset($_POST['register'])){
 
   }else{
   //check wheter there is a user with this email or not
-  $conn->prepare("SELECT count(*) FROM users where user_email=?");
+  $stmt1 = $conn->prepare("SELECT count(*) FROM users where user_email=?");
   $stmt1->bind_param('s',$email);
   $stmt1->execute();
   $stmt1->bind_result($num_rows);
@@ -43,7 +43,7 @@ if(isset($_POST['register'])){
 
 
   //create new user
-  $conn->prepare("INSERT INTO users(user_name, user_email, user_password)
+  $stmt = $conn->prepare("INSERT INTO users(user_name, user_email, user_password)
                   VALUES (?,?,?)");
 
   $stmt->bind_param('sss', $name,$email,md5($password)); 

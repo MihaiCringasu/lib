@@ -8,7 +8,7 @@ if(isset($_POST['add_to_cart'])){
 
       $products_array_ids = array_column($_SESSION['cart'], "product_id"); //array with all products ids
       //check if product has already been added or not
-      if(!in_array($_POST['product_id'], $product_array_ids) ){
+      if(!in_array($_POST['product_id'], $products_array_ids) ){
 
 
           $product_id = $_POST['product_id'];
@@ -16,7 +16,7 @@ if(isset($_POST['add_to_cart'])){
            $product_array = array(
                       'product_id' => $_POST['product_id'],
                       'product_name' => $_POST['product_name'],
-                      'product_price' => $_POST['product_name'],
+                      'product_price' => $_POST['product_price'],
                       'product_image' => $_POST['product_image'],
                       'product_quantity' => $_POST['product_quantity'],
       );
@@ -75,6 +75,7 @@ if(isset($_POST['add_to_cart'])){
 function calculateTotalCart(){
 
       $total = 0;
+      $total_quantity = 0;
 
   foreach($_SESSION['cart'] as $key => $value){
 
@@ -84,10 +85,12 @@ function calculateTotalCart(){
 
         $quantity = $product['product_quantity'];
 
-        $total = $total + ($price * $quantity);
+        $total_price = $total_price + ($price * $quantity);
+        $total_quantity = $total_quantity + $quantity;
   }
 
-  $_SESSION['total'] = $total;
+  $_SESSION['total'] = $total_price;
+  $_SESSION['quantity'] = $total_quantity;
 }
 
 
@@ -97,36 +100,6 @@ function calculateTotalCart(){
 
 <?php include('layouts/header.php'); ?>
 
-
-<nav class="navbar navbar-expand-lg bg-body-tertiary py-3 fixed-top">
-  <div class="container">
-    <img src="assets/img/logo.png" />
-
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-
-    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-      
-      <div class="nav-buttons d-flex align-items-center ms-5">
-        <ul class="navbar-nav mb-2 mb-lg-0 d-flex flex-row">
-          <li class="nav-item me-3">
-            <a class="nav-link" href="index.php">Home</a>
-          </li>
-          <li class="nav-item me-3">
-            <a class="nav-link" href="shop.html">Link</a>
-          </li>
-          <li class="nav-item me-3">
-            <a class="nav-link" href="contact.html">Contact us</a>
-          </li>
-        </ul>
-        <a href="cart.php"><i class="fas fa-shopping-bag me-3"></i></a>
-        <a href="account.html"><i class="fas fa-user"></i></a>
-      </div>
-
-    </div>
-  </div>
-</nav>
 
 
 

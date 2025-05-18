@@ -54,10 +54,11 @@ if(isset($_POST['change_password'])){
 
 //get orders
 if(isset($_SESSION['logged_in'])){
-  include('connection.php');
+  include('server/connection.php');
 
 $user_id = $_SESSION['user_id'];
-$stmt = $conn->prepare("SELECT * FROM orders WHERE userd_id=? ");
+$stmt = $conn->prepare("SELECT * FROM orders WHERE user_id = ?");
+
 
 $stmt->bind_param('i',$user_id);
 

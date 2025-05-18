@@ -19,14 +19,14 @@
 
     if($stmt->execute()){
       $stmt->bind_result($user_id,$user_name,$user_email,$user_password);
-      $stmt->store_resul();
+      $stmt->store_result();
       if($stmt->num_rows() == 1){
         $stmt->fetch();
 
         $_SESSION['user_id'] = $user_id;
         $_SESSION['user_name'] = $user_name;
         $_SESSION['user_email'] = $user_email;
-        $_SESSION['loggen_in'] = true;
+        $_SESSION['logged_in'] = true;
 
         header('location: account.php?login_success=logged in succesfully');
 
@@ -78,7 +78,7 @@
                     <input type="password" class="form-control" id="login-password" name="password" placeholder="password" required/>
                 </div>
                                 <div class="form-group">
-                    <input type="submit" class="btn" id="login-btn" name="logint_btn" value="login"/>
+                    <input type="submit" class="btn" id="login-btn" name="login_btn" value="login"/>
                 </div>
                                 <div class="form-group">
                     <a id="register-url" href="register.php" class="btn">Don't have an account? Register</a>
