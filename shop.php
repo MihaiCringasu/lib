@@ -14,7 +14,7 @@ if (isset($_POST['search'])) {
         $page_no = 1;
     }
 
-    $category = $_GET['category'];
+    $category = $POST['category'] ?? '';
     $price = $_POST['price'] ?? 1000;
 
 
@@ -95,7 +95,11 @@ if (isset($_POST['search'])) {
 
 
 <?php include('layouts/header.php'); ?>
-
+<style>
+  body {
+    background-color: #b8b9d1 ;
+  }
+</style>
 
 
     <!--featured search-->
@@ -112,7 +116,7 @@ if (isset($_POST['search'])) {
           <form action="shop.php" method="POST">
             <p>Category</p>
             <div class="form-check">
-              <input class="form-check-input" value="shoes" type="radio" name="category" id="category_one" <?php if(isset($category)&& $category='shoes'){ echo 'checked';}?>>
+              <input class="form-check-input" value="shoes" type="radio" name="category" id="category_one" <?php if(isset($category)&& $category ='shoes'){ echo 'checked';}?>>
               <label class="form-check-label" for="category_one"> Shoes</label>
             </div>
             <div class="form-check">

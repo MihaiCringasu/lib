@@ -7,6 +7,15 @@
   font-family: 'Poppins', sans-serif;
 }
 
+:root {
+  --primary-color: #4A6FA5;
+  --secondary-color: #A0AEC0;
+  --accent-color: #7DA2A9;
+  --dark-accent-color: #2C3E50;
+  --light-bg-color: #F4F7FA;
+  --text-color: #4B5563;
+}
+
 body {
   font-family:'Poppins', sans-serif;
 }
@@ -73,6 +82,7 @@ h6 {
   left: 0;
   box-shadow: 0 5px 10px rgba(0,0,0,0.1);
 
+
 }
 
 .nav-buttons{
@@ -89,7 +99,7 @@ h6 {
 .navbar i:hover,
 .navbar-light .navbar-nav .nav-link.active
 .navbar i:hover{
-  color:coral;
+  color: #7DA2A9;
 
 }
 
@@ -131,7 +141,7 @@ h6 {
 }
 
 #home span{
-  color: coral;
+  color: rgb(219, 215, 219);
 }
 /*sectiunea a doua de poze unde-s 3*/
 #new .one img{
@@ -140,11 +150,13 @@ h6 {
   background-position: center;
   background-repeat: none;
   background-size: cover;
+  object-fit: cover;
 
 }
 
 #new .one{
   position: relative;
+  overflow: hidden;
 }
 
 #new .one .details {
@@ -204,6 +216,11 @@ h6 {
 
 .product img{
   transition: 0.3s all;
+  width: 85%;
+  height: 250px;
+  object-fit: cover;  
+  background-color: white;
+  border-radius: 5px; 
 }
 
 .product:hover img{
@@ -527,4 +544,9 @@ th:last-child{
   border-radius: 50%;
   margin: -3px;
   font-size: 1rem;
+}
+
+footer a:hover {
+  text-decoration: underline;
+  color: #ffc107;
 }
