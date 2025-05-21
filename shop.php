@@ -1,94 +1,48 @@
- <?php
+<?php
 
+session_start();
 include('server/connection.php');
 
+// 1. Setăm pagina curentă
+$page_no = isset($_GET['page_no']) && $_GET['page_no'] != "" ? (int)$_GET['page_no'] : 1;
 
-//use the search section
-if (isset($_POST['search'])) {
+// 2. Preluăm filtrele din URL (GET)
+$category = $_GET['category'] ?? '';
+$price = isset($_GET['price']) ? (int)$_GET['price'] : 1000;
 
-  if(isset($_GET['page_no']) && $_GET['page_no'] != "") {
-      //daca utilizatorul a intrat deja 
-        $page_no = $_GET['page_no'];
-    } else {
-      //daca utilizatorul abia a intrat pe pagina, atunci pagina 1 e default
-        $page_no = 1;
-    }
-
-    $category = $POST['category'] ?? '';
-    $price = $_POST['price'] ?? 1000;
-
-
-        //2. return number of products
-    $stmt1 = $conn->prepare("SELECT COUNT(*) As total_records FROM products WHERE product_category=? AND product_price<=?");
-    $stmt1->bind_param("si",$category, $price);
-    $stmt1->execute();
-    $stmt1->bind_result($total_records);
-    $stmt1->store_result();
-    $stmt1->fetch();
-
-    
-    //3 products per page
-    $total_records_per_page = 8;
-
-    $offset = ($page_no - 1) * $total_records_per_page;
-    $previous_page = $page_no - 1;
-    $next_page = $page_no + 1;
-
-    $adjacent = "2";
-    $total_no_of_pages = ceil($total_records / $total_records_per_page);
-
-
-    //get all products
-    $stmt2 = $conn->prepare("SELECT * FROM products WHERE product_category=? AND product_price<=? LIMIT $offset, $total_records_per_page");
-    $stmt2->bind_param("si",$category, $price);
-    $stmt2->execute();
-    $products = $stmt2->get_result();
-
-
-
-
-  //return all products
-}else{
-
-    if(isset($_GET['page_no']) && $_GET['page_no'] != "") {
-      //daca utilizatorul a intrat deja 
-        $page_no = $_GET['page_no'];
-    } else {
-      //daca utilizatorul abia a intrat pe pagina, atunci pagina 1 e default
-        $page_no = 1;
-    }
-
-
-    //2. return number of products
-    $stmt1 = $conn->prepare("SELECT COUNT(*) As total_records FROM products");
-    $stmt1->execute();
-    $stmt1->bind_result($total_records);
-    $stmt1->store_result();
-    $stmt1->fetch();
-
-
-    //3 products per page
-    $total_records_per_page = 8;
-
-    $offset = ($page_no - 1) * $total_records_per_page;
-    $previous_page = $page_no - 1;
-    $next_page = $page_no + 1;
-
-    $adjacent = "2";
-    $total_no_of_pages = ceil($total_records / $total_records_per_page);
-
-
-
-    //get all products
-    $stmt2 = $conn->prepare("SELECT * FROM products LIMIT $offset, $total_records_per_page");
-    $stmt2->execute();
-    $products = $stmt2->get_result();
+// 3. Calculăm numărul total de produse
+if ($category != '') {
+    $stmt1 = $conn->prepare("SELECT COUNT(*) AS total_records FROM products WHERE product_category = ? AND product_price <= ?");
+    $stmt1->bind_param("si", $category, $price);
+} else {
+    $stmt1 = $conn->prepare("SELECT COUNT(*) AS total_records FROM products WHERE product_price <= ?");
+    $stmt1->bind_param("i", $price);
 }
+$stmt1->execute();
+$stmt1->bind_result($total_records);
+$stmt1->store_result();
+$stmt1->fetch();
 
+// 4. Setări pentru paginare
+$total_records_per_page = 8;
+$offset = ($page_no - 1) * $total_records_per_page;
+$previous_page = $page_no - 1;
+$next_page = $page_no + 1;
+$total_no_of_pages = ceil($total_records / $total_records_per_page);
 
-
+// 5. Selectăm produsele pentru afișare
+if ($category != '') {
+    $stmt2 = $conn->prepare("SELECT * FROM products WHERE product_category = ? AND product_price <= ? LIMIT ?, ?");
+    $stmt2->bind_param("siii", $category, $price, $offset, $total_records_per_page);
+} else {
+    $stmt2 = $conn->prepare("SELECT * FROM products WHERE product_price <= ? LIMIT ?, ?");
+    $stmt2->bind_param("iii", $price, $offset, $total_records_per_page);
+}
+$stmt2->execute();
+$products = $stmt2->get_result();
 
 ?>
+
 
 
 
@@ -113,30 +67,31 @@ if (isset($_POST['search'])) {
           <h5>Search products</h5>
           <hr>
 
-          <form action="shop.php" method="POST">
+          <form action="shop.php" method="GET">
             <p>Category</p>
             <div class="form-check">
-              <input class="form-check-input" value="shoes" type="radio" name="category" id="category_one" <?php if(isset($category)&& $category ='shoes'){ echo 'checked';}?>>
+              <input class="form-check-input" value="shoes" type="radio" name="category" id="category_one" <?php if(isset($category)&& $category == 'shoes'){ echo 'checked';}?>>
               <label class="form-check-label" for="category_one"> Shoes</label>
             </div>
             <div class="form-check">
-              <input class="form-check-input" value="coats" type="radio" name="category" id="category_two" <?php if(isset($category)&& $category='coats'){ echo 'checked';}?>>
+              <input class="form-check-input" value="coats" type="radio" name="category" id="category_two" <?php if(isset($category)&& $category =='coats'){ echo 'checked';}?>>
               <label class="form-check-label" for="category_two">Coats</label>
             </div>
             <div class="form-check">
-              <input class="form-check-input" value="watches" type="radio" name="category" id="category_three" <?php if(isset($category)&& $category='watches'){ echo 'checked';}?>>
+              <input class="form-check-input" value="watches" type="radio" name="category" id="category_three" <?php if(isset($category)&& $category =='watches'){ echo 'checked';}?>>
               <label class="form-check-label" for="category_three">Watches</label>
             </div>
             <div class="form-check">
-              <input class="form-check-input" value="bags" type="radio" name="category" id="category_four" <?php if(isset($category)&& $category='bags'){ echo 'checked';}?>>
+              <input class="form-check-input" value="bags" type="radio" name="category" id="category_four" <?php if(isset($category)&& $category =='bags'){ echo 'checked';}?>>
               <label class="form-check-label" for="category_four">Bags</label>
             </div>
 
             <p class="mt-4">Price</p>
-            <input type="range" class="form-range" name="price" value="<?php if(isset($price)){ echo $price;} else{ echo "100";}?>" min="1" max="1000" id="customRange2">
-            <div class="price-range d-flex justify-content-between w-75">
-              <span style="float: left;">1</span>
-              <span style="float: right;">1000</span>
+            <input type="range" class="form-range" name="price" id="priceRange" value="<?php echo isset($price) ? $price : 1000; ?>" min="1" max="1000" oninput="priceOutput.value = priceRange.value">
+
+            <div class="price-range d-flex justify-content-between w-100 mt-2">
+              <span>1</span>
+              <output id="priceOutput"><?php echo isset($price) ? $price : 1000; ?></output>
             </div>
 
             <div class="form-group my-3">
@@ -202,6 +157,8 @@ if (isset($_POST['search'])) {
 
 
 <!--de inclus footer si aici si in home-->
+
+
       <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/js/bootstrap.bundle.min.js" integrity="sha384-j1CDi7MgGQ12Z7Qab0qlWQ/Qqz24Gc6BM0thvEMVjHnfYGF0rmFCozFSxQBxwHKO" crossorigin="anonymous"></script>
 </body>
 </html>
