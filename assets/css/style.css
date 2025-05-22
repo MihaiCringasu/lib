@@ -94,6 +94,9 @@ h6 {
   color:#000;
   transition: 0.4 ease;
 }
+navbar-light{
+  background-color: grey;
+}
 
 .navbar-light .navbar-nav .nav-link:hover,
 .navbar i:hover,
@@ -462,6 +465,8 @@ th:last-child{
 
 #account-form input{
   margin:5px auto;
+  width: 100%;
+  max-width: 400px;
 }
 
 #account-form #change-pass-btn{

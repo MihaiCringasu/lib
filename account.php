@@ -75,6 +75,27 @@ if (isset($_POST['change_image']) && isset($_FILES['user_image'])) {
 ?>
 
 <?php include('layouts/header.php'); ?>
+<style>
+  #account-form input[type="password"],
+  #account-form input[type="email"],
+  #account-form input[type="text"] {
+    width: 100% !important;
+    max-width: 220px;
+    padding: 12px;
+    margin: 10px auto;
+    display: block;
+    box-sizing: border-box;
+  }
+
+  #account-form {
+    width: 100% !important;
+    max-width: 600px;
+    margin: 0 auto;
+    text-align: center;
+  }
+</style>
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
 
 <!-- Account -->
 <section class="my-5 py-5">
@@ -82,7 +103,7 @@ if (isset($_POST['change_image']) && isset($_FILES['user_image'])) {
     <div class="text-center mt-3 pt-5 col-lg-6 col-md-12 col-sm-12">
       <p class="text-center" style="color:green"><?php if(isset($_GET['register_success'])){ echo $_GET['register_success']; }?></p>
       <p class="text-center" style="color:green"><?php if(isset($_GET['login_sucess'])){ echo $_GET['login_sucess']; }?></p>
-      <h3 class="font-weight-bold">Account info</h3>
+      <h3 class="font-weight-bold"><i class="fas fa-user-circle"></i> Account Info</h3>
       <hr class="mx-auto">
 
       <?php
@@ -91,10 +112,10 @@ if (isset($_POST['change_image']) && isset($_FILES['user_image'])) {
       <img src="assets/img/<?php echo $user_image; ?>" width="100" height="100" class="rounded-circle mb-3" alt="Profile Picture">
 
       <div class="account-info">
-        <p>Name: <span><?php echo $_SESSION['user_name']; ?></span></p>
-        <p>Email: <span><?php echo $_SESSION['user_email']; ?></span></p>
-        <p><a href="#orders" id="order-btn">Your orders</a></p>
-        <p><a href="account.php?logout=1" id="logout-btn">Logout</a></p>
+        <p><i class="fas fa-user"></i> Name: <span><?php echo $_SESSION['user_name']; ?></span></p>
+        <p><i class="fas fa-envelope"></i> Email: <span><?php echo $_SESSION['user_email']; ?></span></p>
+        <p><a href="#orders" id="order-btn"><i class="fas fa-box"></i> Your Orders</a></p>
+        <p><a href="account.php?logout=1" id="logout-btn"><i class="fas fa-sign-out-alt"></i> Logout</a></p>
       </div>
     </div>
 
@@ -103,70 +124,80 @@ if (isset($_POST['change_image']) && isset($_FILES['user_image'])) {
       <form id="account-form" method="POST" action="account.php">
         <p class="text-center" style="color:red"><?php if(isset($_GET['error'])){ echo $_GET['error']; }?></p>
         <p class="text-center" style="color:green"><?php if(isset($_GET['message'])){ echo $_GET['message']; }?></p>
-        <h3>Change Password</h3>
+        <h3><i class="fas fa-key"></i> Change Password</h3>
         <hr class="mx-auto">
         <div class="form-group">
-          <label>Password</label>
-          <input type="password" class="form-control" name="password" placeholder="Password" required/>
+          <label><i class="fas fa-lock"></i> Your Password</label>
+          <input type="password" class="form-control w-75" name="currentPassword" placeholder="Enter current password" required/>
         </div>
         <div class="form-group">
-          <label>Confirm Password</label>
-          <input type="password" class="form-control" name="confirmPassword" placeholder="Confirm Password" required/>
+          <label><i class="fas fa-unlock-alt"></i> New Password</label>
+          <input type="password" class="form-control w-75" name="password" placeholder="Enter new password" required/>
         </div>
         <div class="form-group">
-          <input type="submit" value="Change password" name="change_password" class="btn" />
+          <label><i class="fas fa-unlock"></i> Confirm New Password</label>
+          <input type="password" class="form-control w-75" name="confirmPassword" placeholder="Confirm new password" required/>
+        </div>
+        <div class="form-group">
+          <input type="submit" value="Change Password" name="change_password" class="btn btn-primary" />
         </div>
       </form>
     </div>
   </div>
 </section>
 
-<!-- Change profile picture -->
+<!-- Profile Picture -->
 <section class="container mb-5">
   <form method="POST" action="account.php" enctype="multipart/form-data">
-    <h3>Change Profile Picture</h3>
+    <h3><i class="fas fa-image"></i> Change Profile Picture</h3>
     <div class="form-group">
-      <input type="file" name="user_image" class="form-control" accept="image/*" required>
+      <input type="file" name="user_image" class="form-control w-75" accept="image/*" required>
     </div>
     <div class="form-group mt-2">
-      <button type="submit" name="change_image" class="btn btn-primary">Upload</button>
+      <button type="submit" name="change_image" class="btn btn-primary"><i class="fas fa-upload"></i> Upload</button>
     </div>
   </form>
 </section>
 
-<!-- Orders Section -->
+<!-- Orders -->
 <section id="orders" class="orders container my-5 py-3">
   <div class="container mt-2">
-    <h2 class="font-weight-bold text-center">Your orders</h2>
+    <h2 class="font-weight-bold text-center"><i class="fas fa-list"></i> Your Orders</h2>
     <hr class="mx-auto">
   </div>
 
-  <table class="mt-5 pt-5">
-    <tr>
-      <th>Order id</th>
-      <th>Order cost</th>
-      <th>Order status</th>
-      <th>Order Date</th>
-      <th>Order Details</th>
-    </tr> 
-    <?php while($row = $orders->fetch_assoc()) { ?>
-    <tr>
-      <td><span><?php echo $row['order_id']; ?></span></td>  
-      <td><span><?php echo $row['order_cost']; ?></span></td>
-      <td><span><?php echo $row['order_status']; ?></span></td>
-      <td><span><?php echo $row['order_date']; ?></span></td>
-      <td>
-        <form method="POST" action="order_details.php">
-          <input type="hidden" value="<?php echo $row['order_status'];?>" name="order_status"/>
-          <input type="hidden" value="<?php echo $row['order_id'];?>" name="order_id" />
-          <input class="btn order-details-btn" name="order_details_btn" type="submit" value="details" />
-        </form>
-      </td>
-    </tr>
-    <?php } ?>
-  </table> 
+  <table class="mt-5 pt-5 table table-bordered">
+    <thead class="table-dark">
+      <tr>
+        <th>Order ID</th>
+        <th>Cost</th>
+        <th>Status</th>
+        <th>Date</th>
+        <th>Details</th>
+      </tr>
+    </thead>
+    <tbody>
+      <?php while($row = $orders->fetch_assoc()) { ?>
+      <tr>
+        <td><span><?php echo $row['order_id']; ?></span></td>
+        <td><span>$<?php echo $row['order_cost']; ?></span></td>
+        <td><span><?php echo $row['order_status']; ?></span></td>
+        <td><span><?php echo $row['order_date']; ?></span></td>
+        <td>
+          <form method="POST" action="order_details.php">
+            <input type="hidden" name="order_status" value="<?php echo $row['order_status']; ?>" />
+            <input type="hidden" name="order_id" value="<?php echo $row['order_id']; ?>" />
+            <button class="btn btn-outline-info btn-sm" name="order_details_btn" type="submit">
+              <i class="fas fa-info-circle"></i> Details
+            </button>
+          </form>
+        </td>
+      </tr>
+      <?php } ?>
+    </tbody>
+  </table>
 </section>
 
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

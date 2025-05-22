@@ -24,7 +24,7 @@ $stmt1->store_result();
 $stmt1->fetch();
 
 // 4. Setări pentru paginare
-$total_records_per_page = 8;
+$total_records_per_page = 9;
 $offset = ($page_no - 1) * $total_records_per_page;
 $previous_page = $page_no - 1;
 $next_page = $page_no + 1;
@@ -40,35 +40,67 @@ if ($category != '') {
 }
 $stmt2->execute();
 $products = $stmt2->get_result();
-
 ?>
 
-
-
-
-
-
 <?php include('layouts/header.php'); ?>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+
 <style>
   body {
-    background-color: #b8b9d1 ;
+    background-color: #d8dde3;
+  }
+  .product-card {
+    background-color: #f4f7fa;
+    border-radius: 0 0 10px 10px;
+    overflow: hidden;
+    transition: 0.3s;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+  }
+  .product-card img {
+    width: 100%;
+    height: 300px;
+    object-fit: cover;
+    border-radius: 0;
+  }
+  .product-details {
+    background-color: #f4f7fa;
+    padding: 15px;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 160px;
+  }
+  .product-details .btn {
+    margin-top: auto;
+    align-self: center;
+  }
+  .search-sidebar {
+    background-color: #f0f3f7;
+    border-radius: 8px;
+  }
+  @media (max-width: 768px) {
+    .product-card img {
+      height: 200px;
+    }
   }
 </style>
 
-
-    <!--featured search-->
-    <section id="search" class="my-5 py-5 ms-2">
-      <div class="container mt-5 py-5">
+<!-- Shop Section -->
+<section id="search" class="my-5 py-5">
+  <div class="container mt-5 py-5">
     <div class="row">
-      
-      <!-- Sidebar Search Filters -->
-      <div class="col-lg-3">
-        <div class="search-sidebar">
-          <h5>Search products</h5>
+
+      <!-- Sidebar Filters -->
+      <div class="col-lg-3 mb-4">
+        <div class="search-sidebar p-3 shadow-sm">
+          <h5><i class="fas fa-filter me-2"></i>Filtrare produse</h5>
           <hr>
 
           <form action="shop.php" method="GET">
-            <p>Category</p>
+            <p><strong><i class="fas fa-tags me-2"></i>Categorie</strong></p>
             <div class="form-check">
               <input class="form-check-input" value="shoes" type="radio" name="category" id="category_one" <?php if(isset($category)&& $category == 'shoes'){ echo 'checked';}?>>
               <label class="form-check-label" for="category_one"> Shoes</label>
@@ -86,40 +118,40 @@ $products = $stmt2->get_result();
               <label class="form-check-label" for="category_four">Bags</label>
             </div>
 
-            <p class="mt-4">Price</p>
+            <p class="mt-4"><strong><i class="fas fa-dollar-sign me-2"></i>Preț</strong></p>
             <input type="range" class="form-range" name="price" id="priceRange" value="<?php echo isset($price) ? $price : 1000; ?>" min="1" max="1000" oninput="priceOutput.value = priceRange.value">
-
-            <div class="price-range d-flex justify-content-between w-100 mt-2">
+            <div class="d-flex justify-content-between">
               <span>1</span>
               <output id="priceOutput"><?php echo isset($price) ? $price : 1000; ?></output>
             </div>
 
             <div class="form-group my-3">
-              <input type="submit" name="search" value="Search" class="btn btn-dark w-100">
+              <button type="submit" name="search" class="btn btn-dark w-100"><i class="fas fa-search"></i> Caută</button>
             </div>
           </form>
         </div>
       </div>
 
-      <!-- Products -->
+      <!-- Products List -->
       <div class="col-lg-9">
-        <h3>Our Products</h3>
+        <h3 class="mb-3"><i class="fas fa-boxes me-2"></i>Produsele noastre</h3>
         <hr>
-        <p>Here you can check out our products</p>
 
-        <div class="row">
+        <div class="row g-4">
           <?php while($row = $products->fetch_assoc()) { ?>
-            <div class="product text-center col-lg-4 col-md-6 col-sm-12 mb-4" style="cursor: pointer;">
-              <div onclick="window.location.href='single_product.php?product_id=<?php echo $row['product_id']; ?>'">
-                <img class="img-fluid mb-3" src="assets/img/<?php echo $row['product_image']; ?>"/>
-                <div class="star">
-                  <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
-                  <i class="fas fa-star"></i><i class="fas fa-star"></i>
+            <div class="col-lg-4 col-md-6">
+              <div class="product-card shadow-sm">
+                <a href="single_product.php?product_id=<?php echo $row['product_id']; ?>">
+                  <img src="assets/img/<?php echo $row['product_image']; ?>" alt="<?php echo htmlspecialchars($row['product_name']); ?>">
+                </a>
+                <div class="product-details">
+                  <h5 class="p-name text-dark fw-bold mb-1"><?php echo $row['product_name']; ?></h5>
+                  <h6 class="p-price text-success mb-2">$<?php echo $row['product_price']; ?></h6>
+                  <a class="btn btn-outline-primary btn-sm" href="single_product.php?product_id=<?php echo $row['product_id']; ?>">
+                    <i class="fas fa-shopping-cart me-1"></i> Cumpără
+                  </a>
                 </div>
-                <h5 class="p-name"><?php echo $row['product_name']; ?></h5>
-                <h4 class="p-price">$<?php echo $row['product_price']; ?></h4>
               </div>
-              <a class="btn shop-buy-btn" href="single_product.php?product_id=<?php echo $row['product_id']; ?>">Buy now</a>
             </div>
           <?php } ?>
         </div>
@@ -127,22 +159,16 @@ $products = $stmt2->get_result();
         <!-- Pagination -->
         <nav aria-label="Page navigation" class="mt-4">
           <ul class="pagination justify-content-center">
-
             <li class="page-item <?php if($page_no<=1){echo'disabled';}?>">
-              <a class="page-link" href="<?php if($page_no <= 1){ echo '#';} else{ echo"?page_no=".$page_no-1;} ?>" >Previous</a>
+              <a class="page-link" href="<?php if($page_no <= 1){ echo '#';} else{ echo"?page_no=".($page_no-1);} ?>">&laquo; Înapoi</a>
             </li>
-            <li class="page-item"><a class="page-link" href="?page_no=1">1</a></li>
-            <li class="page-item"><a class="page-link" href="?page_no=2">2</a></li>
-
-            <?php if( $page_no >=3 ) {?>
-            <li class="page-item"><a class="page-link" href="#">...</a></li>
-            <li class="page-item"><a class="page-link" href="<?php echo "?page_no=".$page_no;?>"><?php echo $page_no;?></a></li>
-            <?php } ?>
-
-
-
+            <?php for ($i = 1; $i <= $total_no_of_pages; $i++): ?>
+              <li class="page-item <?php if($page_no==$i) echo 'active'; ?>">
+                <a class="page-link" href="?page_no=<?= $i ?>"><?= $i ?></a>
+              </li>
+            <?php endfor; ?>
             <li class="page-item <?php if($page_no >= $total_no_of_pages){ echo 'disabled'; }?>">
-              <a class="page-link" href="<?php if($page_no >= $total_no_of_pages){ echo '#';}else{ echo "?page_no=".($page_no+1);} ?>" >Next</a>
+              <a class="page-link" href="<?php if($page_no >= $total_no_of_pages){ echo '#';}else{ echo "?page_no=".($page_no+1);} ?>">Înainte &raquo;</a>
             </li>
           </ul>
         </nav>
@@ -151,14 +177,9 @@ $products = $stmt2->get_result();
 
     </div>
   </div>
-</section>  
+</section>
 
-
-
-
-<!--de inclus footer si aici si in home-->
-
-
-      <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/js/bootstrap.bundle.min.js" integrity="sha384-j1CDi7MgGQ12Z7Qab0qlWQ/Qqz24Gc6BM0thvEMVjHnfYGF0rmFCozFSxQBxwHKO" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
+<?php include('layouts/footer.php'); ?>
 </body>
 </html>
