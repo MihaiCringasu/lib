@@ -44,21 +44,23 @@ session_start();
           </li>
         
         <li class="nav-item">
+         <a href="wishlist.php"><i class="fas fa-heart me-3 icons"></i></a>
            <a href="cart.php">
-            <i class="fas fa-shopping-bag me-3">
+            <i class="fas fa-shopping-bag me-3 icons">
             <?php if(isset($_SESSION['quantity']) && $_SESSION['quantity'] !=0 ) {?>
               <span class="cart-quantity"><?php echo $_SESSION['quantity']; ?></span>
               <?php } ?>
             </i>
            </a>
-        <a href="account.php"><i class="fas fa-user"></i></a>
+        <a href="account.php"><i class="fas fa-user icons"></i></a>
         </li>
         </ul>
       </div>
 
-
+              
       </ul>
 
     </div>
   </div>
 </nav>
+

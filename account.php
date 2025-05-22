@@ -103,7 +103,7 @@ if (isset($_POST['change_image']) && isset($_FILES['user_image'])) {
     <div class="text-center mt-3 pt-5 col-lg-6 col-md-12 col-sm-12">
       <p class="text-center" style="color:green"><?php if(isset($_GET['register_success'])){ echo $_GET['register_success']; }?></p>
       <p class="text-center" style="color:green"><?php if(isset($_GET['login_sucess'])){ echo $_GET['login_sucess']; }?></p>
-      <h3 class="font-weight-bold"><i class="fas fa-user-circle"></i> Account Info</h3>
+      <h3 class="font-weight-bold"><i class="fas fa-user-circle"></i> Informații despre cont</h3>
       <hr class="mx-auto">
 
       <?php
@@ -124,22 +124,22 @@ if (isset($_POST['change_image']) && isset($_FILES['user_image'])) {
       <form id="account-form" method="POST" action="account.php">
         <p class="text-center" style="color:red"><?php if(isset($_GET['error'])){ echo $_GET['error']; }?></p>
         <p class="text-center" style="color:green"><?php if(isset($_GET['message'])){ echo $_GET['message']; }?></p>
-        <h3><i class="fas fa-key"></i> Change Password</h3>
+        <h3><i class="fas fa-key"></i> Schimbă Parola</h3>
         <hr class="mx-auto">
         <div class="form-group">
-          <label><i class="fas fa-lock"></i> Your Password</label>
-          <input type="password" class="form-control w-75" name="currentPassword" placeholder="Enter current password" required/>
+          <label><i class="fas fa-lock"></i> Parola ta:</label>
+          <input type="password" class="form-control w-75" name="currentPassword" placeholder="Introdu parola curentă" required/>
         </div>
         <div class="form-group">
-          <label><i class="fas fa-unlock-alt"></i> New Password</label>
-          <input type="password" class="form-control w-75" name="password" placeholder="Enter new password" required/>
+          <label><i class="fas fa-unlock-alt"></i> Parola nouă:</label>
+          <input type="password" class="form-control w-75" name="password" placeholder="Introdu parola nouă" required/>
         </div>
         <div class="form-group">
-          <label><i class="fas fa-unlock"></i> Confirm New Password</label>
-          <input type="password" class="form-control w-75" name="confirmPassword" placeholder="Confirm new password" required/>
+          <label><i class="fas fa-unlock"></i> Confirmă parola nouă:</label>
+          <input type="password" class="form-control w-75" name="confirmPassword" placeholder="Confirmă parola nouă" required/>
         </div>
         <div class="form-group">
-          <input type="submit" value="Change Password" name="change_password" class="btn btn-primary" />
+          <input type="submit" value="Schimbă parola" name="change_password" class="btn btn-primary" />
         </div>
       </form>
     </div>
@@ -149,7 +149,7 @@ if (isset($_POST['change_image']) && isset($_FILES['user_image'])) {
 <!-- Profile Picture -->
 <section class="container mb-5">
   <form method="POST" action="account.php" enctype="multipart/form-data">
-    <h3><i class="fas fa-image"></i> Change Profile Picture</h3>
+    <h3><i class="fas fa-image"></i> Schimbă fotografia de profil:</h3>
     <div class="form-group">
       <input type="file" name="user_image" class="form-control w-75" accept="image/*" required>
     </div>
@@ -162,7 +162,7 @@ if (isset($_POST['change_image']) && isset($_FILES['user_image'])) {
 <!-- Orders -->
 <section id="orders" class="orders container my-5 py-3">
   <div class="container mt-2">
-    <h2 class="font-weight-bold text-center"><i class="fas fa-list"></i> Your Orders</h2>
+    <h2 class="font-weight-bold text-center"><i class="fas fa-list"></i> Comenzile tale</h2>
     <hr class="mx-auto">
   </div>
 
@@ -199,5 +199,6 @@ if (isset($_POST['change_image']) && isset($_FILES['user_image'])) {
 </section>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/js/bootstrap.bundle.min.js"></script>
+    <?php include('layouts/footer.php'); ?>
 </body>
 </html>

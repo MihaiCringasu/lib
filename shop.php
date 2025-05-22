@@ -51,7 +51,7 @@ $products = $stmt2->get_result();
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
 
 <!-- Shop Section -->
-<section id="search" class="my-1 py-1">
+<section id="search">
   <div class="container mt-5 py-5">
     <div class="row">
 
@@ -75,19 +75,19 @@ $products = $stmt2->get_result();
             <p><strong><i class="fas fa-tags me-2"></i>Categorie</strong></p>
             <div class="form-check">
               <input class="form-check-input" value="shoes" type="radio" name="category" id="category_one" <?php if(isset($category)&& $category == 'shoes'){ echo 'checked';}?>>
-              <label class="form-check-label" for="category_one"> Shoes</label>
+              <label class="form-check-label" for="category_one"> Încălțăminte</label>
             </div>
             <div class="form-check">
               <input class="form-check-input" value="coats" type="radio" name="category" id="category_two" <?php if(isset($category)&& $category =='coats'){ echo 'checked';}?>>
-              <label class="form-check-label" for="category_two">Coats</label>
+              <label class="form-check-label" for="category_two">Geci</label>
             </div>
             <div class="form-check">
               <input class="form-check-input" value="watches" type="radio" name="category" id="category_three" <?php if(isset($category)&& $category =='watches'){ echo 'checked';}?>>
-              <label class="form-check-label" for="category_three">Watches</label>
+              <label class="form-check-label" for="category_three">Ceasuri</label>
             </div>
             <div class="form-check">
               <input class="form-check-input" value="bags" type="radio" name="category" id="category_four" <?php if(isset($category)&& $category =='bags'){ echo 'checked';}?>>
-              <label class="form-check-label" for="category_four">Bags</label>
+              <label class="form-check-label" for="category_four">Genți</label>
             </div>
 
             <p class="mt-4"><strong><i class="fas fa-dollar-sign me-2"></i>Preț</strong></p>

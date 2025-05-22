@@ -108,5 +108,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['delete_product'])) {
             </tbody>
         </table>
     </div>
+    
 </body>
 </html>

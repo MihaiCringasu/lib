@@ -99,7 +99,7 @@ if (isset($_POST['add_product'])) {
                     </div>
                     <div class="col-md-4 mb-3">
                         <label class="form-label">Reducere (%)</label>
-                        <input type="number" name="special_offer" class="form-control" required>
+                        <input type="number" name="special_offer" class="form-control">
                     </div>
                     <div class="col-md-4 mb-3">
                         <label class="form-label">Culoare</label>

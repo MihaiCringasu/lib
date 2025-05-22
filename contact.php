@@ -10,36 +10,37 @@
     </div>
     <div class="row">
         <!-- Contact Info -->
-        <div class="col-md-6 mb-4">
-            <div class="mb-3 d-flex align-items-start">
-                <i class="fa fa-phone fa-2x text-primary me-3" aria-hidden="true"></i>
-                <div>
-                    <h5 class="mb-1">Telefon</h5>
-                    <p class="mb-0">+40 712 345 678</p>
-                </div>
-            </div>
-            <div class="mb-3 d-flex align-items-start">
-                <i class="fa fa-envelope fa-2x text-primary me-3" aria-hidden="true"></i>
-                <div>
-                    <h5 class="mb-1">Email</h5>
-                    <p class="mb-0">contact@libshop.ro</p>
-                </div>
-            </div>
-            <div class="mb-3 d-flex align-items-start">
-                <i class="fa fa-map-marker fa-2x text-primary me-3" aria-hidden="true"></i>
-                <div>
-                    <h5 class="mb-1">Adresă</h5>
-                    <p class="mb-0">Cluj-Napoca, România</p>
-                </div>
-            </div>
-            <div class="mb-3 d-flex align-items-start">
-                <i class="fa fa-clock-o fa-2x text-primary me-3" aria-hidden="true"></i>
-                <div>
-                    <h5 class="mb-1">Program</h5>
-                    <p class="mb-0">Luni - Vineri: 09:00 - 18:00</p>
-                </div>
-            </div>
+    <div class="col-md-6 mb-4">
+    <div class="mb-3 d-flex align-items-start">
+        <i class="fa fa-phone fa-2x icons me-3" aria-hidden="true"></i>
+        <div>
+        <h5 class="mb-1">Telefon</h5>
+        <p class="mb-0">+40 712 345 678</p>
         </div>
+    </div>
+    <div class="mb-3 d-flex align-items-start">
+        <i class="fa fa-envelope fa-2x icons me-3" aria-hidden="true"></i>
+        <div>
+        <h5 class="mb-1">Email</h5>
+        <p class="mb-0">infocompanyemail2@gmail.com</p>
+        </div>
+    </div>
+    <div class="mb-3 d-flex align-items-start">
+        <i class="fa fa-map-marker fa-2x icons me-3" aria-hidden="true"></i>
+        <div>
+        <h5 class="mb-1">Adresă</h5>
+        <p class="mb-0">Cluj-Napoca, România</p>
+        </div>
+    </div>
+    <div class="mb-3 d-flex align-items-start">
+        <i class="fa fa-clock-o fa-2x icons me-3" aria-hidden="true"></i>
+        <div>
+        <h5 class="mb-1">Program</h5>
+        <p class="mb-0">Luni - Vineri: 09:00 - 18:00</p>
+        </div>
+    </div>
+    </div>
+
 
         <!-- Map + Form -->
         <div class="col-md-6">
@@ -71,5 +72,6 @@
 </section>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/js/bootstrap.bundle.min.js"></script>
+    <?php include('layouts/footer.php'); ?>
 </body>
 </html>

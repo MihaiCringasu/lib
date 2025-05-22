@@ -49,4 +49,7 @@
             <a href="index.php" class="btn btn-primary mt-3">Înapoi la magazin</a>
         </div>
     </body>
+
+        <?php include('layouts/footer.php'); ?>
     </html>
+

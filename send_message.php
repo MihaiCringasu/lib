@@ -7,7 +7,7 @@ use PHPMailer\PHPMailer\Exception;
 require 'PHPMailer/src/Exception.php';
 require 'PHPMailer/src/PHPMailer.php';
 require 'PHPMailer/src/SMTP.php';
-require 'server/connection.php'; // fișierul tău mysqli_connect
+require 'server/connection.php'; 
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $name    = htmlspecialchars(trim($_POST["name"]));
@@ -27,8 +27,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $mail->isSMTP();
         $mail->Host       = 'smtp.gmail.com';
         $mail->SMTPAuth   = true;
-        $mail->Username   = 'infocompanyemail2@gmail.com';     // adresa Gmail
-        $mail->Password   = 'kfya epik efyv ncjq';               // parola generată
+        $mail->Username   = 'infocompanyemail2@gmail.com';     
+        $mail->Password   = 'kfya epik efyv ncjq';               
         $mail->SMTPSecure = 'tls';
         $mail->Port       = 587;
 
