@@ -15,7 +15,7 @@ $stmt->bind_param('i', $order_id);
 $stmt->execute();
 $order_details = $stmt->get_result();
 
-// Fetch extra metadata
+// Meta info
 $meta_query = mysqli_query($conn, "SELECT * FROM orders WHERE order_id = $order_id");
 $meta = mysqli_fetch_assoc($meta_query);
 $order_total_price = $meta['order_cost'];
@@ -39,41 +39,23 @@ $order_total_price = $meta['order_cost'];
             </tr>
         </thead>
         <tbody>
-            <?php foreach ($order_details as $row): ?>
+            <?php while ($row = $order_details->fetch_assoc()): ?>
                 <tr>
-                    <td class="text-start">
-                        <div class="d-flex align-items-center">
-                            <img src="assets/img/<?php echo $row['product_image']; ?>" width="60" class="me-3 rounded shadow-sm">
-                            <span><?php echo $row['product_name']; ?></span>
-                        </div>
-                    </td>
+                    <td class="text-start"><?php echo $row['product_name']; ?></td>
                     <td>$<?php echo $row['product_price']; ?></td>
                     <td><?php echo $row['product_quantity']; ?></td>
                 </tr>
-            <?php endforeach; ?>
+            <?php endwhile; ?>
         </tbody>
     </table>
 
     <div class="card p-4 mt-4 shadow-sm">
         <h5><i class="fas fa-info-circle me-2 text-primary"></i>Informații suplimentare:</h5>
         <ul class="list-group list-group-flush">
-            <li class="list-group-item">
-                <i class="fas fa-barcode me-2"></i>ID comandă: <strong>#<?php echo $order_id; ?></strong>
-            </li>
-            <li class="list-group-item">
-                <i class="fas fa-calendar-alt me-2"></i>Data: <strong><?php echo $meta['order_date']; ?></strong>
-            </li>
-            <li class="list-group-item">
-                <i class="fas fa-money-bill-wave me-2"></i>Total: <strong>$<?php echo number_format($order_total_price, 2); ?></strong>
-            </li>
-            <li class="list-group-item">
-                <i class="fas fa-percentage me-2"></i>Reducere: <strong>
-                <?php echo !empty($meta['coupon_code']) ? $meta['coupon_code'] . " ({$meta['coupon_discount']}%)" : 'Niciuna'; ?>
-                </strong>
-            </li>
-            <li class="list-group-item">
-                <i class="fas fa-credit-card me-2"></i>Status plată: <strong><?php echo ucfirst($order_status); ?></strong>
-            </li>
+            <li class="list-group-item"><i class="fas fa-barcode me-2"></i>ID comandă: <strong>#<?php echo $order_id; ?></strong></li>
+            <li class="list-group-item"><i class="fas fa-calendar-alt me-2"></i>Data: <strong><?php echo $meta['order_date']; ?></strong></li>
+            <li class="list-group-item"><i class="fas fa-money-bill-wave me-2"></i>Total: <strong>$<?php echo number_format($order_total_price, 2); ?></strong></li>
+            <li class="list-group-item"><i class="fas fa-credit-card me-2"></i>Status plată: <strong><?php echo ucfirst($order_status); ?></strong></li>
         </ul>
 
         <?php if ($order_status == "not paid"): ?>

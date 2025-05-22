@@ -37,46 +37,94 @@ if (isset($_POST['add_product'])) {
 ?>
 
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Add Product</title>
-    <link rel="stylesheet" href="style.css"> <!-- Customize as needed -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Adaugă Produs</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body { background-color: #f9f9fb; }
+        .form-container {
+            max-width: 800px;
+            margin: 40px auto;
+            background: #fff;
+            border-radius: 12px;
+            padding: 30px;
+            box-shadow: 0 0 15px rgba(106, 13, 173, 0.2);
+        }
+        .form-header {
+            background: #6a0dad;
+            color: white;
+            border-radius: 8px 8px 0 0;
+            padding: 20px;
+            text-align: center;
+        }
+        .btn-success {
+            background-color: #6a0dad;
+            border-color: #6a0dad;
+        }
+        .btn-success:hover {
+            background-color: #5c0bbb;
+            border-color: #5c0bbb;
+        }
+    </style>
 </head>
-
 <body>
-    <h2>Add New Product</h2>
-    <form method="POST" enctype="multipart/form-data">
-        <label>Product Name:</label><br>
-        <input type="text" name="name" required><br><br>
+    <div class="form-container">
+        <div class="form-header">
+            <h3>Adaugă Produs Nou</h3>
+        </div>
+        <div class="p-4">
+            <form method="POST" enctype="multipart/form-data">
+                <div class="mb-3">
+                    <label class="form-label">Nume produs</label>
+                    <input type="text" name="name" class="form-control" required>
+                </div>
 
-        <label>Category:</label><br>
-        <input type="text" name="category" required><br><br>
+                <div class="mb-3">
+                    <label class="form-label">Categorie</label>
+                    <input type="text" name="category" class="form-control" required>
+                </div>
 
-        <label>Description:</label><br>
-        <textarea name="description" required></textarea><br><br>
+                <div class="mb-3">
+                    <label class="form-label">Descriere</label>
+                    <textarea name="description" class="form-control" rows="3" required></textarea>
+                </div>
 
-        <label>Price:</label><br>
-        <input type="number" step="0.01" name="price" required><br><br>
+                <div class="row">
+                    <div class="col-md-4 mb-3">
+                        <label class="form-label">Preț ($)</label>
+                        <input type="number" step="0.01" name="price" class="form-control" required>
+                    </div>
+                    <div class="col-md-4 mb-3">
+                        <label class="form-label">Reducere (%)</label>
+                        <input type="number" name="special_offer" class="form-control" required>
+                    </div>
+                    <div class="col-md-4 mb-3">
+                        <label class="form-label">Culoare</label>
+                        <input type="text" name="color" class="form-control" required>
+                    </div>
+                </div>
 
-        <label>Special Offer (%):</label><br>
-        <input type="number" name="special_offer" required><br><br>
+                <div class="row">
+                    <?php for ($i = 1; $i <= 4; $i++): ?>
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label">Imagine <?php echo $i; ?></label>
+                        <input type="file" name="image<?php echo $i; ?>" class="form-control" required>
+                    </div>
+                    <?php endfor; ?>
+                </div>
 
-        <label>Color:</label><br>
-        <input type="text" name="color" required><br><br>
+                <div class="text-end">
+                    <button type="submit" name="add_product" class="btn btn-success">
+                        <i class="fas fa-plus"></i> Adaugă Produs
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
 
-        <label>Image 1:</label><br>
-        <input type="file" name="image1" required><br><br>
-
-        <label>Image 2:</label><br>
-        <input type="file" name="image2" required><br><br>
-
-        <label>Image 3:</label><br>
-        <input type="file" name="image3" required><br><br>
-
-        <label>Image 4:</label><br>
-        <input type="file" name="image4" required><br><br>
-
-        <input type="submit" name="add_product" value="Add Product">
-    </form>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

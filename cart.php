@@ -206,7 +206,7 @@ function calculateTotalCart()
                 }
             });
     });
-</script>
+</script>       
 
 
 <?php include('layouts/footer.php'); ?>

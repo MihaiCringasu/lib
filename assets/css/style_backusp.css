@@ -1,10 +1,12 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
   font-family: 'Poppins', sans-serif;
 }
+
 :root {
   --primary-color: #4A6FA5;
   --secondary-color: #A0AEC0;
@@ -13,40 +15,52 @@
   --light-bg-color: #F4F7FA;
   --text-color: #4B5563;
 }
+
 body {
   font-family:'Poppins', sans-serif;
 }
+
+
 html {
   scroll-behavior: smooth;
 }
+
+
 h1 {
   font-family:'Poppins', sans-serif;
   font-size: 2.5rem;
   font-weight: 700;
 }
+
 h2 {
   font-family:'Poppins', sans-serif;
   font-size: 1.8rem;
   font-weight: 600;
 }
+
 h3 {
   font-family:'Poppins', sans-serif;
   font-size: 1.5rem;
   font-weight: 800;
 }
+
 h4 {
   font-family:'Poppins', sans-serif;
   font-size: 1.2rem;
   font-weight: 600;
 }
+
 h5 {font-family:'Poppins', sans-serif;
   font-size: 1.2rem;
   font-weight: 400;
+
 }
+
 h6 {
   font-family:'Poppins', sans-serif;
   color:aliceblue;
 }
+
 .btn.btn-primary{
   background-color: black;
   color: white;
@@ -56,6 +70,7 @@ h6 {
   border-radius: 0;
   text-transform: uppercase;
 }
+
 .navbar, .navbar-nav .nav-link {
   font-family: 'Poppins', sans-serif;
 }
@@ -66,10 +81,14 @@ h6 {
   top: 0;
   left: 0;
   box-shadow: 0 5px 10px rgba(0,0,0,0.1);
+
+
 }
+
 .nav-buttons{
   margin-left: 60px;
 }
+
 .navbar-light .navbar-nav .nav-link{
   padding: 0 20px;
   color:#000;
@@ -78,20 +97,25 @@ h6 {
 navbar-light{
   background-color: grey;
 }
+
 .navbar-light .navbar-nav .nav-link:hover,
 .navbar i:hover,
 .navbar-light .navbar-nav .nav-link.active
 .navbar i:hover{
   color: #7DA2A9;
+
 }
+
 .navbar i{
   font-size: 1.2rem;
   padding: 0 0.7px;
   transition: 0.4s ease;
   cursor:pointer
+  
 }
 /*In caz de se face fereastra mica sa se vada bn site ul*/
 @media only screen and (max-width:990px){ 
+
   .nav-buttons{
     margin: 10px;
   }
@@ -101,6 +125,7 @@ navbar-light{
     align-items: flex-start;
     text-align: left;
   }
+
   .nav-buttons ul.fas{
     margin: 20px 5px 10px 20px;
   }
@@ -117,6 +142,7 @@ navbar-light{
   justify-content: center;
   align-items: flex-start;
 }
+
 #home span{
   color: rgb(219, 215, 219);
 }
@@ -128,11 +154,14 @@ navbar-light{
   background-repeat: none;
   background-size: cover;
   object-fit: cover;
+
 }
+
 #new .one{
   position: relative;
   overflow: hidden;
 }
+
 #new .one .details {
   position: absolute;
   top: 0;
@@ -145,14 +174,18 @@ navbar-light{
   width: 100%;
   height: 100%;
 }
+
 #new .one img.img-fluid {
   max-height: 450px; 
   object-fit: cover; 
   width: 100%;
 }
+
+
 #new .one .details:hover{
   background-color: grey;
 }
+
 #new .one:nth-child(1) .details{
   display: flex;
   justify-content: center;
@@ -160,6 +193,7 @@ navbar-light{
   align-items: flex-start;
   text-align: start;
 }
+
 #new .one:nth-child(2) .details{
   display: flex;
   justify-content: center;
@@ -167,6 +201,7 @@ navbar-light{
   align-items: flex-start;
   text-align: start;
 }
+
 #new .one:nth-child(3) .details{
   display: flex;
   justify-content: center;
@@ -174,11 +209,14 @@ navbar-light{
   align-items: flex-start;
   text-align: start;
 }
+
 /*products*/
+
 .product{
   cursor: pointer;
   margin-bottom: 2rem;
 }
+
 .product img{
   transition: 0.3s all;
   width: 85%;
@@ -187,9 +225,11 @@ navbar-light{
   background-color: white;
   border-radius: 5px; 
 }
+
 .product:hover img{
   opacity: 0.7;
 }
+
 .product .buy-btn{
   background-color: purple;
   transform: translateY(50px);
@@ -197,22 +237,35 @@ navbar-light{
   transition: 0.3s all; 
   color: white;
 }
+
+
+.shop-buy-btn{
+  background-color: purple;
+  opacity: 1;
+  color: white;
+  text-decoration: none;
+}
+
 .related-product img {
     width: 100px; 
     height: 250px;
     object-fit: cover;
     border-radius: 8px;
 }
+
+
 .product:hover .buy-btn{
   transform: translateY(0px);
   opacity: 1;
 }
+
 hr{
   width: 30px;
   height: 3px;
   opacity: 1;
   background-color: purple
 }
+
 #banner{
   background-image: url('../img/banner.jpg');
   width: 100%;
@@ -226,7 +279,9 @@ hr{
   flex-direction: column;
   justify-content: center;
   align-items: flex-start;
+  
 }
+
 #banner h1{
   color: rgb(216, 212, 212);
 }
@@ -236,14 +291,17 @@ hr{
 #banner button:hover{
   background-color: purple;
 }
+
 .small-img-group{
   display:flex;
   justify-content: space-between;
 }
+
 .small-img-col{
   flex-basis: 24%;
   cursor: pointer;
 }
+
 .single-product input{
   width: 50px;
   height: 40px;
@@ -251,51 +309,104 @@ hr{
   font-size: 16px;
   margin-right: 10px;
 }
+
 .single-product input:focus{
   outline: none;
 }
+
 .single-product .buy-btn{
   background-color: coral;
   opacity: 1;
   transition: 0.4s;
 }
+
 .single-product .buy-btn:hover{
   background-color: blueviolet;
 }
+
 /*cart*/
+
 .cart table{
   width: 100%;
   border-collapse: collapse;
 }
-.cart 
+
+.cart .product-info{
+  display:flex;
+  flex-wrap: wrap;
+}
+
 .cart th{
   text-align: left;
   padding: 5px 10px;
   color: aliceblue;
   background-color: purple;
 }
+
 .cart td{
   padding: 10px 20px;
 }
+
 .cart td img{
   width: 80px;
   height: 80px; 
   margin-right: 10px;
 }
-.cart 
-.cart 
+
+.cart .remove-btn{
+  color: purple;
+  text-decoration: none;
+  font-size: 14px;
+  background-color: none;
+  border: none;
+  width: 100%;
+}
+
+.cart .edit-btn{
+  color:purple;
+  text-decoration: none;
+  font-size: 15px;
+  background-color: white;
+  border: none;
+  width: 100%;
+}
+
+.cart-total{
+  display:flex;
+  justify-content: flex-end;
+}
+
 .cart-total table{
   width:100%;
   max-width: 500px;
   border-top: 3px solid purple;
 }
+
 td:last-child{
   text-align: right;
 }
+
 th:last-child{
   text-align: right;
 }
+
+
+.checkout-container{
+  display: flex;
+  justify-content: flex-end;
+}
+
+.checkout-btn{
+  display: flex;
+  justify-content: flex-end;
+  background-color: purple;
+  color: white;
+}
+
+
 /*login*/
+
+
 #login-form{
   width: 50%;
   margin: 5px auto;
@@ -303,18 +414,23 @@ th:last-child{
   padding: 20px;
   border-top: 1px solid purple;
 }
+
 #login-form input{
   width: 50%;
   margin: 5px auto;
 }
+
 #login-form #login-btn{
   background-color: purple;
   color: aliceblue;
 }
+
 #login-form #register{
   color: purple;
 }
+
 /*register*/
+
 #register-form{
   width: 50%;
   margin: 5px auto;
@@ -322,55 +438,88 @@ th:last-child{
   padding: 20px;
   border-top: 1px solid purple;
 }
+
 #register-form input{
   width: 50%;
   margin: 5px auto;
 }
+
 #register-form #register-btn{
   background-color: purple;
   color: white;
 }
+
+
 #register-form #login-url{
   color: purple;
 }
+
 /*account*/
+
 #account-form{
   width: 50px;
   margin: 35px auto;
   text-align: center;
   padding: 20px;
 }
+
 #account-form input{
   margin:5px auto;
   width: 100%;
   max-width: 400px;
 }
+
 #account-form #change-pass-btn{
   color: white;
   background-color: purple;
 }
+
 .account-info #order-btn,#logout-btn{
   color: purple;
   text-decoration: none;
 }
+
 /*checkout*/
-#checkout-form 
-#checkout-form 
-#checkout-form 
+
+#checkout-form .checkout-small-element{
+  display: inline-block;
+  width: 48%;
+  margin: 10px auto;
+}
+
+#checkout-form .checkout-large-element{
+  width: 97%;
+}
+
+#checkout-form .checkout-btn-container{
+  margin:10px;
+  text-align: right;
+  margin-right: 40px;
+}
+
 #checkout-form #checkout-btn{
   color: white;
   background-color: purple;
 }
+
 /*contact*/
 #contact span{
   color: purple;  
 }
+
+
 /*orders*/
+
 .orders table{
   width:100%;
   border-collapse: collapse;
 }
-.orders 
+
+.orders .product-info{
+  display: flex;
+  flex-wrap: wrap;
+
+}
 .orders th{
   padding: 5px 20px;
   color:#fff;
@@ -378,15 +527,28 @@ th:last-child{
   /*text-align: left;*/
 }
 
+.orders th:nth-child(2){
+  /*text-align: right;*/
+}
+
 .orders td{
   padding: 10px 20px;
 }
+
 .orders td img{
   width: 80px;
   height: 80px;
   margin-right: 10px;
 }
 
+.orders .order-details-btn{
+  color:#fff;
+  background-color: purple;
+}
+
+#search{
+  
+}
 .cart-quantity{
   background-color: coral;
   color: white; 
@@ -395,22 +557,27 @@ th:last-child{
   margin: -3px;
   font-size: 1rem;
 }
+
 footer a:hover {
   text-decoration: underline;
   color: #ffc107;
 }
+
+
 .related-products-container .related-product img {
     width: 100%;
     height: 250px;
     object-fit: cover;
     border-radius: 10px;
 }
+
 .related-products-container {
     display: flex;
     flex-wrap: wrap;
     gap: 20px;
     justify-content: center;
 }
+
 #comments textarea {
   width: 100%;
   padding: 10px;
@@ -418,95 +585,7 @@ footer a:hover {
   border: 1px solid #ccc;
   resize: vertical;
 }
+
 #comments .comment {
   border-left: 4px solid #007bff;
 }
-
- /* Product Card */
-.product-card .discount-badge {
-  position: absolute;
-  top: 10px;
-  left: 10px;
-  background-color: #dc3545;
-  color: white;
-  padding: 5px 10px;
-  font-size: 0.9rem;
-  border-radius: 5px;
-  z-index: 10;
-}
-
-  body {
-    background-color: #d8dde3;
-  }
-  .product-card {
-    background-color: #f4f7fa;
-    border-radius: 0 0 10px 10px;
-    overflow: hidden;
-    transition: 0.3s;
-    display: flex;
-    flex-direction: column;
-    height: 100%;
-  }
-  .product-card img {
-    width: 100%;
-    height: 300px;
-    object-fit: cover;
-    border-radius: 0;
-  }
-  .product-details {
-    background-color: #f4f7fa;
-    padding: 15px;
-    text-align: center;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    height: 160px;
-  }
-  .product-details .btn {
-    margin-top: auto;
-    align-self: center;
-  }
-  .search-sidebar {
-    background-color: #f0f3f7;
-    border-radius: 8px;
-  }
-  @media (max-width: 768px) {
-    .product-card img {
-      height: 200px;
-    }
-  }
-  .product-card {
-    position: relative;
-    background-color: #f4f7fa;
-    border-radius: 0 0 10px 10px;
-    overflow: hidden;
-    display: flex;
-    flex-direction: column;
-    height: 100%;
-  }
-
-  .discount-badge {
-    position: absolute; 
-    top: 10px;
-    left: 40px;
-    background-color: #dc3545;
-    color: white;
-    padding: 5px 10px;
-    font-weight: bold;
-    border-radius: 5px;
-
-  }
-
-  .btn-outline-custom {
-    border: 1px solid #000;
-    color: #000;
-    background-color: transparent;
-    transition: all 0.3s ease;
-  }
-
-  .btn-outline-custom:hover {
-    background-color: #6a1b9a; 
-    border-color: #6a1b9a;
-    color: white;
-  }
-

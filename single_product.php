@@ -79,15 +79,36 @@ if (isset($_GET['product_id'])) {
         <div class="col-lg-6 col-md-12 col-sm-12">
             <h6><?php echo ucfirst($product_data['product_category']); ?></h6>
             <h3 class="py-4"><?php echo $product_data['product_name']; ?></h3>
-            <h2>$<?php echo $product_data['product_price']; ?></h2>
+            <?php if ($product_data['product_special_offer'] > 0): 
+                    $original_price = $product_data['product_price'];
+                    $discount = $product_data['product_special_offer'];
+                    $discounted_price = $original_price * ((100 - $discount) / 100);
+                 ?>
+                    <h4>
+                        <span class="text-danger me-2">
+                            <i class="fas fa-tag"></i> <?php echo $discount; ?>% reducere
+                        </span>
+                    </h4>
+                    <h2>
+                        <span class="text-muted text-decoration-line-through me-2">$<?php echo number_format($original_price, 2); ?></span>
+                        <span class="text-success">$<?php echo number_format($discounted_price, 2); ?></span>
+                    </h2>
+                <?php else: ?>
+                    <h2>$<?php echo number_format($product_data['product_price'], 2); ?></h2>
+                <?php endif; ?>
 
             <form method="POST" action="cart.php">
                 <input type="hidden" name="product_id" value="<?php echo $product_data['product_id']; ?>"/>
                 <input type="hidden" name="product_image" value="<?php echo $product_data['product_image']; ?>"/>
                 <input type="hidden" name="product_name" value="<?php echo $product_data['product_name']; ?>"/>   
-                <input type="hidden" name="product_price" value="<?php echo $product_data['product_price']; ?>"/>           
-                <input type="number" name="product_quantity" value="1"/>
-                <button class="buy-btn" type="submit" name="add_to_cart">Add to cart</button>
+                <?php
+                                $price_for_cart = $product_data['product_special_offer'] > 0 
+                                ? $product_data['product_price'] * ((100 - $product_data['product_special_offer']) / 100) 
+                                : $product_data['product_price'];
+                        ?>
+                        <input type="hidden" name="product_price" value="<?php echo number_format($price_for_cart, 2, '.', ''); ?>"/>           
+                                        <input type="number" name="product_quantity" value="1"/>
+                <button class="btn buy-btn" type="submit" name="add_to_cart">Add to cart</button>
             </form>
             <h4 class="mt-5 mb-5">Product details</h4>
             <span><?php echo $product_data['product_description']; ?></span>
@@ -97,25 +118,53 @@ if (isset($_GET['product_id'])) {
 
 <!-- Related Products -->
 <section id="related-products" class="my-5">
-    <div class="container text-center mt-5 py-5">
-        <h3>Related products</h3>
-        <hr>
-        <p>Here you can check out our related items</p>
-    </div>
-    <div class="row mx-auto container-fluid related-products-container">
-        <?php while($related = $related_products->fetch_assoc()) { ?>
-            <div class="product text-center col-lg-3 col-md-4 col-sm-12 related-product">
-                <img class="img-fluid mb-3" src="assets/img/<?php echo $related['product_image']; ?>"/>
-                <div class="star">
-                    <i class="fas fa-star"></i><i class="fas fa-star"></i>
-                    <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
-                </div>
-                <h5 class="p-name"><?php echo $related['product_name']; ?></h5>
-                <h4 class="p-price">$<?php echo $related['product_price']; ?></h4>
-                <a href="single_product.php?product_id=<?php echo $related['product_id']; ?>" class="btn buy-btn">Buy now</a>
+  <div class="container text-center mt-5 py-4">
+    <h3 class="fw-bold"><i class="fas fa-thumbs-up me-2 text-purple"></i>Produse recomandate</h3>
+    <hr class="mx-auto w-25">
+    <p>Inspiră-te din selecția noastră de produse similare</p>
+  </div>
+
+  <div class="row g-4 mx-auto container-fluid">
+    <?php while($related = $related_products->fetch_assoc()) { ?>
+      <div class="col-lg-3 col-md-4 col-sm-6">
+        <div class="product-card shadow-sm position-relative h-100">
+
+          <!-- Discount badge -->
+          <?php if ($related['product_special_offer'] > 0): ?>
+            <div class="discount-badge">
+              <?php echo $related['product_special_offer']; ?>%
             </div>
-        <?php } ?>
-    </div>
+          <?php endif; ?>
+
+          <a href="single_product.php?product_id=<?php echo $related['product_id']; ?>">
+            <img class="img-fluid" src="assets/img/<?php echo $related['product_image']; ?>" alt="<?php echo htmlspecialchars($related['product_name']); ?>">
+          </a>
+
+          <div class="product-details">
+            <h5 class="p-name text-dark fw-bold mb-1"><?php echo $related['product_name']; ?></h5>
+
+            <?php if ($related['product_special_offer'] > 0): 
+                $original = $related['product_price'];
+                $discount = $related['product_special_offer'];
+                $discounted = $original * ((100 - $discount) / 100);
+            ?>
+              <div class="mb-2">
+                <span class="text-muted text-decoration-line-through me-2">$<?php echo number_format($original, 2); ?></span>
+                <span class="text-success fw-bold">$<?php echo number_format($discounted, 2); ?></span>
+              </div>
+            <?php else: ?>
+              <h6 class="p-price text-success mb-2">$<?php echo number_format($related['product_price'], 2); ?></h6>
+            <?php endif; ?>
+
+            <a href="single_product.php?product_id=<?php echo $related['product_id']; ?>" class="btn btn-outline-custom">
+              <i class="fas fa-shopping-cart me-1"></i> Cumpără
+            </a>
+          </div>
+
+        </div>
+      </div>
+    <?php } ?>
+  </div>
 </section>
 
 <!-- Comments Section -->

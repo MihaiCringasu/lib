@@ -9,14 +9,17 @@ $page_no = isset($_GET['page_no']) && $_GET['page_no'] != "" ? (int)$_GET['page_
 // 2. Preluăm filtrele din URL (GET)
 $category = $_GET['category'] ?? '';
 $price = isset($_GET['price']) ? (int)$_GET['price'] : 1000;
+$search = $_GET['search'] ?? ''; // 🔍 căutare după nume
 
 // 3. Calculăm numărul total de produse
 if ($category != '') {
-    $stmt1 = $conn->prepare("SELECT COUNT(*) AS total_records FROM products WHERE product_category = ? AND product_price <= ?");
-    $stmt1->bind_param("si", $category, $price);
+    $stmt1 = $conn->prepare("SELECT COUNT(*) AS total_records FROM products WHERE product_category = ? AND product_price <= ? AND product_name LIKE ?");
+    $search_param = "%$search%";
+    $stmt1->bind_param("sis", $category, $price, $search_param);
 } else {
-    $stmt1 = $conn->prepare("SELECT COUNT(*) AS total_records FROM products WHERE product_price <= ?");
-    $stmt1->bind_param("i", $price);
+    $stmt1 = $conn->prepare("SELECT COUNT(*) AS total_records FROM products WHERE product_price <= ? AND product_name LIKE ?");
+    $search_param = "%$search%";
+    $stmt1->bind_param("is", $price, $search_param);
 }
 $stmt1->execute();
 $stmt1->bind_result($total_records);
@@ -32,69 +35,38 @@ $total_no_of_pages = ceil($total_records / $total_records_per_page);
 
 // 5. Selectăm produsele pentru afișare
 if ($category != '') {
-    $stmt2 = $conn->prepare("SELECT * FROM products WHERE product_category = ? AND product_price <= ? LIMIT ?, ?");
-    $stmt2->bind_param("siii", $category, $price, $offset, $total_records_per_page);
+    $stmt2 = $conn->prepare("SELECT * FROM products WHERE product_category = ? AND product_price <= ? AND product_name LIKE ? LIMIT ?, ?");
+    $stmt2->bind_param("sisii", $category, $price, $search_param, $offset, $total_records_per_page);
 } else {
-    $stmt2 = $conn->prepare("SELECT * FROM products WHERE product_price <= ? LIMIT ?, ?");
-    $stmt2->bind_param("iii", $price, $offset, $total_records_per_page);
+    $stmt2 = $conn->prepare("SELECT * FROM products WHERE product_price <= ? AND product_name LIKE ? LIMIT ?, ?");
+    $stmt2->bind_param("isii", $price, $search_param, $offset, $total_records_per_page);
 }
 $stmt2->execute();
 $products = $stmt2->get_result();
+
 ?>
+
 
 <?php include('layouts/header.php'); ?>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
 
-<style>
-  body {
-    background-color: #d8dde3;
-  }
-  .product-card {
-    background-color: #f4f7fa;
-    border-radius: 0 0 10px 10px;
-    overflow: hidden;
-    transition: 0.3s;
-    display: flex;
-    flex-direction: column;
-    height: 100%;
-  }
-  .product-card img {
-    width: 100%;
-    height: 300px;
-    object-fit: cover;
-    border-radius: 0;
-  }
-  .product-details {
-    background-color: #f4f7fa;
-    padding: 15px;
-    text-align: center;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    height: 160px;
-  }
-  .product-details .btn {
-    margin-top: auto;
-    align-self: center;
-  }
-  .search-sidebar {
-    background-color: #f0f3f7;
-    border-radius: 8px;
-  }
-  @media (max-width: 768px) {
-    .product-card img {
-      height: 200px;
-    }
-  }
-</style>
-
 <!-- Shop Section -->
-<section id="search" class="my-5 py-5">
+<section id="search" class="my-1 py-1">
   <div class="container mt-5 py-5">
     <div class="row">
 
+    
+      <div class="mb-4">
+        <form method="GET" action="shop.php" class="d-flex">
+          <input type="hidden" name="category" value="<?php echo htmlspecialchars($category); ?>">
+          <input type="hidden" name="price" value="<?php echo htmlspecialchars($price); ?>">
+          <input type="text" name="search" class="form-control me-2" placeholder="Caută după nume..." value="<?php echo htmlspecialchars($search); ?>">
+          <button class="btn btn-outline-dark" type="submit"><i class="fas fa-search me-1"></i> Caută</button>
+        </form>
+      </div>
+      
       <!-- Sidebar Filters -->
-      <div class="col-lg-3 mb-4">
+      <div class="col-lg-3 mb-5 my-3 py-5">
         <div class="search-sidebar p-3 shadow-sm">
           <h5><i class="fas fa-filter me-2"></i>Filtrare produse</h5>
           <hr>
@@ -132,29 +104,56 @@ $products = $stmt2->get_result();
         </div>
       </div>
 
-      <!-- Products List -->
-      <div class="col-lg-9">
-        <h3 class="mb-3"><i class="fas fa-boxes me-2"></i>Produsele noastre</h3>
-        <hr>
 
-        <div class="row g-4">
-          <?php while($row = $products->fetch_assoc()) { ?>
-            <div class="col-lg-4 col-md-6">
-              <div class="product-card shadow-sm">
-                <a href="single_product.php?product_id=<?php echo $row['product_id']; ?>">
-                  <img src="assets/img/<?php echo $row['product_image']; ?>" alt="<?php echo htmlspecialchars($row['product_name']); ?>">
-                </a>
-                <div class="product-details">
-                  <h5 class="p-name text-dark fw-bold mb-1"><?php echo $row['product_name']; ?></h5>
-                  <h6 class="p-price text-success mb-2">$<?php echo $row['product_price']; ?></h6>
-                  <a class="btn btn-outline-primary btn-sm" href="single_product.php?product_id=<?php echo $row['product_id']; ?>">
-                    <i class="fas fa-shopping-cart me-1"></i> Cumpără
-                  </a>
-                </div>
-              </div>
+      <!-- Products List -->
+<div class="col-lg-9">
+  <h3 class="mb-3"><i class="fas fa-boxes me-2"></i>Produsele noastre</h3>
+  <hr>
+
+  <div class="row g-4">
+    <?php while($row = $products->fetch_assoc()) { ?>
+      <div class="col-lg-4 col-md-6">
+        <div class="product-card shadow-sm position-relative">
+          
+          <!-- Discount badge in stanga sus -->
+          <?php if ($row['product_special_offer'] > 0): ?>
+            <div class="discount-badge">
+              <?php echo $row['product_special_offer']; ?>%
             </div>
-          <?php } ?>
+          <?php endif; ?>
+
+          <a href="single_product.php?product_id=<?php echo $row['product_id']; ?>">
+            <img src="assets/img/<?php echo $row['product_image']; ?>" alt="<?php echo htmlspecialchars($row['product_name']); ?>">
+          </a>
+
+          <div class="product-details">
+            <h5 class="p-name text-dark fw-bold mb-1"><?php echo $row['product_name']; ?></h5>
+
+            <?php if ($row['product_special_offer'] > 0): 
+                $original = $row['product_price'];
+                $discount = $row['product_special_offer'];
+                $discounted = $original * ((100 - $discount) / 100);
+            ?>
+                <div class="mb-2">
+                    <div>
+                        <span class="text-muted text-decoration-line-through me-2">$<?php echo number_format($original, 2); ?></span>
+                        <span class="text-success fw-bold">$<?php echo number_format($discounted, 2); ?></span>
+                    </div>
+                </div>
+            <?php else: ?>
+                <h6 class="p-price text-success mb-2">$<?php echo number_format($row['product_price'], 2); ?></h6>
+            <?php endif; ?>
+
+            <a class="btn btn-outline-custom" href="single_product.php?product_id=<?php echo $row['product_id']; ?>">
+              <i class="fas fa-shopping-cart me-1"></i> Cumpără
+            </a> 
+          </div>
         </div>
+      </div>
+    <?php } ?>
+  </div>
+</div>
+
 
         <!-- Pagination -->
         <nav aria-label="Page navigation" class="mt-4">
