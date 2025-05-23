@@ -7,6 +7,33 @@ if (!isset($_SESSION['wishlist'])) {
     $_SESSION['wishlist'] = [];
 }
 
+// ✅ Adaugă produs în wishlist (nou)
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['add_to_wishlist']) && isset($_POST['product_id'])) {
+    $product_id = (int)$_POST['product_id'];
+    $product_name = $_POST['product_name'] ?? '';
+
+    $already_in_wishlist = false;
+
+    // Căutăm produsul în wishlist
+    foreach ($_SESSION['wishlist'] as $item) {
+        if ($item['product_id'] == $product_id) {
+            $already_in_wishlist = true;
+            break;
+        }
+    }
+
+    // Dacă nu e deja, îl adăugăm
+    if (!$already_in_wishlist) {
+        $_SESSION['wishlist'][] = [
+            'product_id' => $product_id,
+            'product_name' => $product_name
+        ];
+    }
+
+    header("Location: wishlist.php");
+    exit();
+}
+
 // Șterge un produs din wishlist
 if (isset($_GET['remove']) && is_numeric($_GET['remove'])) {
     $_SESSION['wishlist'] = array_filter($_SESSION['wishlist'], function($item) {
@@ -76,9 +103,10 @@ if (!empty($wishlist_ids)) {
 }
 ?>
 
+
 <?php include('layouts/header.php'); ?>
 
-<div class="container my-5">
+<div class="container mt-5 py-5">
   <h3 class="mb-4 text-center"><i class="fas fa-heart text-danger me-2"></i>Wishlist-ul tău</h3>
 
   <?php if (!empty($_SESSION['wishlist']) && $products->num_rows > 0): ?>
@@ -91,6 +119,7 @@ if (!empty($wishlist_ids)) {
               <img src="assets/img/<?= $product['product_image'] ?>" class="rounded me-3" style="width: 60px; height: 60px; object-fit: cover;" alt="<?= htmlspecialchars($product['product_name']) ?>">
               <div>
                 <strong class="d-block small mb-1"><?= htmlspecialchars($product['product_name']) ?></strong>
+
                 <?php if ($product['product_special_offer'] > 0): 
                     $original = $product['product_price'];
                     $discount = $product['product_special_offer'];

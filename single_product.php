@@ -88,20 +88,10 @@ if (isset($_GET['product_id'])) {
         </div>
 
         <div class="col-lg-6 col-md-12 col-sm-12">
-            <h6><?php echo ucfirst($product_data['product_category']); ?></h6>
-
+            
             <h3 class="py-4 d-flex align-items-center gap-3">
                 <?php echo $product_data['product_name']; ?>
-                <?php if ($total_reviews > 0): ?>
-                    <span class="text-warning small">
-                        <?php for ($i = 1; $i <= 5; $i++): ?>
-                            <i class="<?= $i <= round($average_rating) ? 'fas' : 'far' ?> fa-star"></i>
-                        <?php endfor; ?>
-                        <span class="text-dark">(<?= $average_rating ?>/5 din <?= $total_reviews ?> review<?= $total_reviews == 1 ? '' : 'uri' ?>)</span>
-                    </span>
-                <?php else: ?>
-                    <span class="text-muted small">(Nicio recenzie încă)</span>
-                <?php endif; ?>
+                
             </h3>
             
             <?php if ($product_data['product_special_offer'] > 0): 
@@ -122,32 +112,29 @@ if (isset($_GET['product_id'])) {
                     <h2>$<?php echo number_format($product_data['product_price'], 2); ?></h2>
                 <?php endif; ?>
 
-            <form method="POST" action="cart.php" class="mb-2">
-                
-                    <form method="POST" action="cart.php" class="mb-2">
-                    <input type="hidden" name="product_id" value="<?php echo $product_data['product_id']; ?>"/>
-                    <input type="hidden" name="product_image" value="<?php echo $product_data['product_image']; ?>"/>
-                    <input type="hidden" name="product_name" value="<?php echo $product_data['product_name']; ?>"/>   
-                    <?php
-                        $price_for_cart = $product_data['product_special_offer'] > 0 
-                            ? $product_data['product_price'] * ((100 - $product_data['product_special_offer']) / 100) 
-                            : $product_data['product_price'];
-                    ?>
-                    <input type="hidden" name="product_price" value="<?php echo number_format($price_for_cart, 2, '.', ''); ?>"/>           
-                    <input type="number" name="product_quantity" value="1"/>
-                    <button class="btn buy-btn" type="submit" name="add_to_cart">Add to cart</button>
-                </form>
+        <form method="POST" action="cart.php" class="d-flex align-items-center gap-2 flex-wrap mb-3">
+            <input type="hidden" name="product_id" value="<?php echo $product_data['product_id']; ?>"/>
+            <input type="hidden" name="product_image" value="<?php echo $product_data['product_image']; ?>"/>
+            <input type="hidden" name="product_name" value="<?php echo $product_data['product_name']; ?>"/>   
+            <?php
+                $price_for_cart = $product_data['product_special_offer'] > 0 
+                    ? $product_data['product_price'] * ((100 - $product_data['product_special_offer']) / 100) 
+                    : $product_data['product_price'];
+            ?>
+            <input type="hidden" name="product_price" value="<?php echo number_format($price_for_cart, 2, '.', ''); ?>"/>           
+            <input type="number" name="product_quantity" value="1" class="form-control" style="width: 80px;">
+            <button class="btn btn-primary" type="submit" name="add_to_cart">Adăugare</button>
+        </form>
 
-                <!-- Formular separat pentru Wishlist -->
-                <?php if (isset($_SESSION['user_id'])): ?>
-                <form method="POST" action="wishlist.php">
-                    <input type="hidden" name="product_id" value="<?= $product_data['product_id']; ?>">
-                    <input type="hidden" name="product_name" value="<?= htmlspecialchars($product_data['product_name']); ?>">
-                    <button type="submit" name="add_to_wishlist" class="btn btn-outline-secondary">
-                        <i class="fas fa-heart me-1"></i> Adaugă la Wishlist
-                    </button>
-                </form>
-                <?php endif; ?>
+        <?php if (isset($_SESSION['user_id'])): ?>
+            <form method="POST" action="wishlist.php" class="mb-3">
+                <input type="hidden" name="product_id" value="<?= $product_data['product_id']; ?>">
+                <input type="hidden" name="product_name" value="<?= htmlspecialchars($product_data['product_name']); ?>">
+                <button type="submit" name="add_to_wishlist" class="btn btn-outline-secondary">
+                    <i class="fas fa-heart me-1"></i> Adaugă la Wishlist
+                </button>
+            </form>
+        <?php endif; ?>
 
 
             </form>
@@ -211,6 +198,19 @@ if (isset($_GET['product_id'])) {
 <!-- Comments Section -->
 <section class="container my-5" id="comments">
     <h3>Comentarii</h3>
+    <h4>
+        <?php if ($total_reviews > 0): ?>
+                    <span class="text-warning small">
+                        <?php for ($i = 1; $i <= 5; $i++): ?>
+                            <i class="<?= $i <= round($average_rating) ? 'fas' : 'far' ?> fa-star"></i>
+                        <?php endfor; ?>
+                        <span class="text-dark">(<?= $average_rating ?>/5 din <?= $total_reviews ?> review<?= $total_reviews == 1 ? '' : 'uri' ?>)</span>
+                    </span>
+                <?php else: ?>
+                    <span class="text-muted small">(Nicio recenzie încă)</span>
+                <?php endif; ?>
+    </h4>
+    
     <hr>
 
     <?php if (isset($_SESSION['user_id'])): ?>

@@ -107,15 +107,36 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['place_order'])) {
                                 <h6 class="mb-1 text-dark"><?php echo htmlspecialchars($product['product_name']); ?></h6>
                                 <small class="text-muted">Cantitate: <?php echo $product['product_quantity']; ?></small>
                             </div>
-                            <span class="fw-bold text-success">$<?php echo number_format($product['product_price'] * $product['product_quantity'], 2); ?></span>
+                            <span class="fw-bold text-success">
+                                $<?php echo number_format($product['product_price'] * $product['product_quantity'], 2); ?>
+                            </span>
                         </div>
                     <?php endforeach; ?>
+
+
+                    <?php if (isset($_SESSION['discount_applied']) && isset($_SESSION['discount_percent'])): ?>
+                        <?php
+                            // Calculează totalul fără reducere
+                            $total_without_discount = 0;
+                            foreach ($_SESSION['cart'] as $product) {
+                                $total_without_discount += $product['product_price'] * $product['product_quantity'];
+                            }
+                            $discount_value = $total_without_discount - $_SESSION['total'];
+                        ?>
+                        <div class="d-flex justify-content-between border-top pt-3 mt-3">
+                            <h6 class="text-muted">Reducere aplicată (<?php echo $_SESSION['discount_percent']; ?>%):</h6>
+                            <h6 class="text-danger">- $<?php echo number_format($discount_value, 2); ?></h6>
+                        </div>
+                    <?php endif; ?>
+                    
+
                     <div class="d-flex justify-content-between border-top pt-3 mt-3">
                         <h5>Total:</h5>
                         <h5 class="text-primary">$<?php echo number_format($_SESSION['total'], 2); ?></h5>
                     </div>
                 </div>
             </div>
+
 
             <!-- Checkout Form -->
             <div class="col-lg-7">
@@ -150,7 +171,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['place_order'])) {
                 </div>
             </div>
         </div>
-    </div>
+    </div>  
 </section>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/js/bootstrap.bundle.min.js"></script>

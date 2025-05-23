@@ -187,7 +187,7 @@ if (isset($_POST['change_image']) && isset($_FILES['user_image'])) {
           <form method="POST" action="order_details.php">
             <input type="hidden" name="order_status" value="<?php echo $row['order_status']; ?>" />
             <input type="hidden" name="order_id" value="<?php echo $row['order_id']; ?>" />
-            <button class="btn btn-outline-info btn-sm" name="order_details_btn" type="submit">
+            <button class="btn btn-primary btn-sm" name="order_details_btn" type="submit">
               <i class="fas fa-info-circle"></i> Details
             </button>
           </form>

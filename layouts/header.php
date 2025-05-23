@@ -23,7 +23,9 @@ session_start();
 
 <nav class="navbar navbar-expand-lg bg-body-tertiary py-3 fixed-top">
   <div class="container">
-    <img src="assets/img/logo.png" />
+    <a href="index.php" class="navbar-brand">
+      <img src="assets/img/logo.png" alt="Logo" style="height: 40px;">
+    </a>
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
@@ -42,6 +44,9 @@ session_start();
           <li class="nav-item me-3">
             <a class="nav-link" href="contact.php">Contact us</a>
           </li>
+                    <li class="nav-item me-3">
+            <a class="nav-link" href="about_us.php">About Us</a>
+          </li>
         
         <li class="nav-item">
          <a href="wishlist.php"><i class="fas fa-heart me-3 icons"></i></a>
@@ -58,9 +63,7 @@ session_start();
       </div>
 
               
-      </ul>
 
     </div>
   </div>
 </nav>
-

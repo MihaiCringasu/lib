@@ -23,7 +23,7 @@
       <img class="img-fluid" src="assets/img/coat.png"/>
       <div class="details">
         <h2>Our Coats</h2>
-        <a href="shop.php?category=coats" class="btn btn-primary">Shop now</a>
+        <a href="shop.php?category=coats" class="btn btn-photo  ">Shop now</a>
       </div>
     </div>
     <!--Doi-->
@@ -31,7 +31,7 @@
       <img class="img-fluid" src="assets/img/ceas.png"/>
       <div class="details">
         <h2>Our Watches</h2>
-        <a href="shop.php?category=watches" class="btn btn-primary">Shop now</a>
+        <a href="shop.php?category=watches" class="btn btn-photo">Shop now</a>
       </div>
     </div>
     <!--trei-->
@@ -39,7 +39,7 @@
       <img class="img-fluid" src="assets/img/papuci.png"/>
       <div class="details">
         <h2>Our Shoes</h2>
-        <a href="shop.php?category=shoes" class="btn btn-primary">Shop now</a>  
+        <a href="shop.php?category=shoes" class="btn btn-photo">Shop now</a>  
       </div>
     </div>
 

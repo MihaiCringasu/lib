@@ -55,7 +55,14 @@ h6 {
   border: none;
   border-radius: 0;
   text-transform: uppercase;
+  transition: all 0.3s ease;
 }
+
+.btn.btn-primary:hover {
+    background-color: purple !important;
+    border-color: purple !important;
+}
+
 .navbar, .navbar-nav .nav-link {
   font-family: 'Poppins', sans-serif;
 }
@@ -174,6 +181,22 @@ navbar-light{
   align-items: flex-start;
   text-align: start;
 }
+
+.btn-photo{
+  background-color: black;
+  color: white;
+  padding: 10px 25px;
+  font-weight: 600;
+  border: none;
+  border-radius: 0;
+  text-transform: uppercase;
+  transition: all 0.3s ease;
+}
+
+.btn-photo:hover {
+    background-color: grey !important;
+    border-color: white !important;
+}
 /*products*/
 .product{
   cursor: pointer;
@@ -255,7 +278,7 @@ hr{
   outline: none;
 }
 .single-product .buy-btn{
-  background-color: coral;
+  background-color: black;
   opacity: 1;
   transition: 0.4s;
 }
@@ -514,4 +537,23 @@ footer a:hover {
   color: #7a18b6 !important;
 }
 
+.btn-outline-secondary {
+    color: black;
+    border-color: black;
+    background-color: transparent;
+    transition: all 0.3s ease;
+}
 
+.btn-outline-secondary:hover {
+    background-color: purple;
+    color: white;
+}
+
+.btn-success {
+    transition: all 0.3s ease;
+}
+
+.btn-success:hover {
+    background-color: purple !important;
+    border-color: purple !important;
+}
